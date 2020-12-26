@@ -2,6 +2,7 @@ package org.spring.lp;
 
 import org.spring.lp.domain.entity.Cliente;
 import org.spring.lp.domain.entity.domain.repositorio.ClienteJDBCRepositorio;
+import org.spring.lp.domain.entity.domain.repositorio.ClienteJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +23,18 @@ public class VendasController {
     private Animal animal;
 
     @Bean
-    public CommandLineRunner inserirClientes(@Autowired ClienteJDBCRepositorio repositorio){
+    public CommandLineRunner inserirClientesJPA(@Autowired ClienteJPARepositorio repositorio){
+        return args -> {
+            repositorio.salvar(new Cliente("Luis Paulo JPA"));
+            repositorio.salvar(new Cliente("Aline JPA"));
+
+            List<Cliente> todos = repositorio.obterTodos();
+            todos.forEach(System.out::println);
+        };
+    }
+
+    //@Bean
+    public CommandLineRunner inserirClientesJDBC(@Autowired ClienteJDBCRepositorio repositorio){
         return args ->{
             repositorio.salvar(new Cliente("Luis Paulo"));
             repositorio.salvar(new Cliente("Aline"));
