@@ -27,7 +27,25 @@ public class VendasController {
             repositorio.salvar(new Cliente("Luis Paulo"));
             repositorio.salvar(new Cliente("Aline"));
 
+            System.out.println("Listando todos os clientes");
             List<Cliente> todos = repositorio.obterTodos();
+            todos.forEach(System.out::println);
+
+            System.out.println("atualizando todos os clientes");
+            todos.forEach(c -> {
+                c.setNome(c.getNome().concat(" atualizado"));
+                repositorio.atualizar(c);
+            });
+            System.out.println("Listando após atualização");
+            todos = repositorio.obterTodos();
+            todos.forEach(System.out::println);
+            System.out.println("Buscando cliente pelo nome");
+            List<Cliente> clientes = repositorio.buscarPorNome("Luis");
+            clientes.forEach(System.out::println);
+            System.out.println("Excluindo todos os clientes");
+            todos.forEach(c -> repositorio.deletar(c));
+            System.out.println("Listando após exclusão");
+            todos = repositorio.obterTodos();
             todos.forEach(System.out::println);
         };
     }
