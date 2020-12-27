@@ -3,6 +3,7 @@ package org.spring.lp;
 import org.spring.lp.domain.entity.Cliente;
 import org.spring.lp.domain.entity.domain.repositorio.ClienteJDBCRepositorio;
 import org.spring.lp.domain.entity.domain.repositorio.ClienteJPARepositorio;
+import org.spring.lp.domain.entity.domain.repositorio.IClienteJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +24,35 @@ public class VendasController {
     private Animal animal;
 
     @Bean
+    public CommandLineRunner inserirClientesIJPA(@Autowired IClienteJPARepositorio repositorio){
+        return args -> {
+            repositorio.save(new Cliente("Luis Paulo JPA"));
+            repositorio.save(new Cliente("Aline JPA"));
+
+            System.out.println("Listando todos os clientes");
+            List<Cliente> todos = repositorio.findAll();
+            todos.forEach(System.out::println);
+
+            System.out.println("atualizando todos os clientes");
+            todos.forEach(c -> {
+                c.setNome(c.getNome().concat(" I atualizado"));
+                repositorio .save(c);
+            });
+            System.out.println("Listando após atualização");
+            todos = repositorio.findAll();
+            todos.forEach(System.out::println);
+            System.out.println("Buscando cliente pelo nome");
+            List<Cliente> clientes = repositorio.findByNomeLike("Lu");
+            clientes.forEach(System.out::println);
+            System.out.println("Excluindo todos os clientes");
+            todos.forEach(c -> repositorio.delete(c));
+            System.out.println("Listando após exclusão");
+            todos = repositorio.findAll();
+            todos.forEach(System.out::println);
+        };
+    }
+
+    //@Bean
     public CommandLineRunner inserirClientesJPA(@Autowired ClienteJPARepositorio repositorio){
         return args -> {
             repositorio.salvar(new Cliente("Luis Paulo JPA"));
