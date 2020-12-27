@@ -1,9 +1,11 @@
 package org.spring.lp;
 
 import org.spring.lp.domain.entity.Cliente;
+import org.spring.lp.domain.entity.Pedido;
 import org.spring.lp.domain.entity.domain.repositorio.ClienteJDBCRepositorio;
 import org.spring.lp.domain.entity.domain.repositorio.ClienteJPARepositorio;
 import org.spring.lp.domain.entity.domain.repositorio.IClienteJPARepositorio;
+import org.spring.lp.domain.entity.domain.repositorio.IPedidoJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,27 @@ public class VendasController {
     private Animal animal;
 
     @Bean
+    public CommandLineRunner inserirClienteEPedido(@Autowired IClienteJPARepositorio clienteJPARepositorio,
+                                                   IPedidoJPARepositorio pedidoJPARepositorio){
+        return args -> {
+            Cliente fulano = new Cliente("Fulano");
+            clienteJPARepositorio.save(fulano);
+
+            Pedido p = new Pedido();
+            p.setDataPedido(LocalDate.now());
+            p.setCliente(fulano);
+            p.setTotal(BigDecimal.valueOf(120));
+
+            pedidoJPARepositorio.save(p);
+
+            Cliente c = clienteJPARepositorio.findClienteFetchPedidos(fulano.getId());
+            System.out.println("Cliente: " + c.getNome());
+            System.out.println("Pedidos:");
+            c.getPedidos().forEach(System.out::println);
+        };
+    }
+
+    //@Bean
     public CommandLineRunner inserirClientesIJPA(@Autowired IClienteJPARepositorio repositorio){
         return args -> {
             repositorio.save(new Cliente("Luis Paulo JPA"));
@@ -123,7 +148,7 @@ public class VendasController {
         };
     }
 
-    @Bean(name = "executarAnimal")
+    //@Bean(name = "executarAnimal")
     public CommandLineRunner executar(){
         return args -> this.animal.fazerBarulho();
     }

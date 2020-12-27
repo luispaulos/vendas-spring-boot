@@ -12,7 +12,7 @@ public class Produto {
 
     private String descricao;
 
-    @Column(name = "preco_unitario", length = 20, precision = 2)
+    @Column(name = "preco_unitario", precision = 20, scale = 2)
     private BigDecimal preco;
 
     public Integer getId() {
@@ -37,5 +37,15 @@ public class Produto {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    @Override
+    public String
+    toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", preco=" + preco +
+                '}';
     }
 }
