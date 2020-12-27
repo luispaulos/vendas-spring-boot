@@ -1,4 +1,4 @@
-package org.spring.lp;
+package org.spring.lp.annotations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

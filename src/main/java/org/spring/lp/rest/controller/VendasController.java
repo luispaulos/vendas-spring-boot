@@ -1,11 +1,12 @@
-package org.spring.lp;
+package org.spring.lp.rest.controller;
 
+import org.spring.lp.Animal;
+import org.spring.lp.annotations.Cachorro;
 import org.spring.lp.domain.entity.Cliente;
-import org.spring.lp.domain.entity.Pedido;
-import org.spring.lp.domain.entity.domain.repositorio.ClienteJDBCRepositorio;
-import org.spring.lp.domain.entity.domain.repositorio.ClienteJPARepositorio;
-import org.spring.lp.domain.entity.domain.repositorio.IClienteJPARepositorio;
-import org.spring.lp.domain.entity.domain.repositorio.IPedidoJPARepositorio;
+import org.spring.lp.domain.repositorio.ClienteJDBCRepositorio;
+import org.spring.lp.domain.repositorio.ClienteJPARepositorio;
+import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
+import org.spring.lp.domain.repositorio.IPedidoJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -13,9 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +25,9 @@ public class VendasController {
     @Cachorro
     private Animal animal;
 
+    @Autowired
+    ClienteJDBCRepositorio clienteRepositorio;
+
     @Bean
     public CommandLineRunner inserirClienteEPedido(@Autowired IClienteJPARepositorio clienteJPARepositorio,
                                                    IPedidoJPARepositorio pedidoJPARepositorio){
@@ -34,17 +35,20 @@ public class VendasController {
             Cliente fulano = new Cliente("Fulano");
             clienteJPARepositorio.save(fulano);
 
-            Pedido p = new Pedido();
-            p.setDataPedido(LocalDate.now());
-            p.setCliente(fulano);
-            p.setTotal(BigDecimal.valueOf(120));
-
-            pedidoJPARepositorio.save(p);
-
-            Cliente c = clienteJPARepositorio.findClienteFetchPedidos(fulano.getId());
-            System.out.println("Cliente: " + c.getNome());
-            System.out.println("Pedidos:");
-            c.getPedidos().forEach(System.out::println);
+//            Pedido p = new Pedido();
+//            p.setDataPedido(LocalDate.now());
+//            p.setCliente(fulano);
+//            p.setTotal(BigDecimal.valueOf(120));
+//
+//            pedidoJPARepositorio.save(p);
+//
+//            Cliente c = clienteJPARepositorio.findClienteFetchPedidos(fulano.getId());
+//            System.out.println("Cliente: " + c.getNome());
+//            System.out.println("Pedidos:");
+//            c.getPedidos().forEach(System.out::println);
+//
+//            System.out.println("Pedidos com findByCliente");
+//            pedidoJPARepositorio.findByCliente(fulano).forEach(System.out::println);
         };
     }
 
@@ -163,11 +167,4 @@ public class VendasController {
         return applicationName;
     }
 
-    @GetMapping("/clientes")
-    public List<String> todosClientes(@Autowired ClienteJDBCRepositorio clienteRepositorio){
-        List<Cliente> todos = clienteRepositorio.obterTodos();
-        List<String> nomes = new ArrayList<>();
-        todos.forEach(cliente -> nomes.add(cliente.getNome()));
-        return nomes;
-    }
 }

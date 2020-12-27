@@ -1,4 +1,4 @@
-package org.spring.lp.domain.entity.domain.repositorio;
+package org.spring.lp.domain.repositorio;
 
 import org.spring.lp.domain.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;

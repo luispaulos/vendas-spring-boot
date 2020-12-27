@@ -1,4 +1,4 @@
-package org.spring.lp;
+package org.spring.lp.annotations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
