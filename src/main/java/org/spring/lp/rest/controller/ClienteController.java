@@ -4,11 +4,9 @@ import org.spring.lp.domain.entity.Cliente;
 import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,4 +25,16 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/clientes/all")
+    @ResponseBody
+    public List<Cliente> todosClientes(){
+        return clienteJPARepositorio.findAll();
+    }
+
+    @PostMapping("/clientes")
+    @ResponseBody
+    public ResponseEntity salvar(@RequestBody Cliente cliente){
+        Cliente clienteSalvo = clienteJPARepositorio.save(cliente);
+        return ResponseEntity.ok(clienteSalvo);
+    }
 }
