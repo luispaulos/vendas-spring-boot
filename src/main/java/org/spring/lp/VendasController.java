@@ -41,9 +41,20 @@ public class VendasController {
             System.out.println("Listando após atualização");
             todos = repositorio.findAll();
             todos.forEach(System.out::println);
-            System.out.println("Buscando cliente pelo nome");
-            List<Cliente> clientes = repositorio.findByNomeLike("%JPA I%");
-            clientes.forEach(System.out::println);
+            System.out.println("Buscando cliente pelo nome findBy");
+            repositorio.findByNomeLike("%Aline%").forEach(System.out::println);
+
+            System.out.println("Buscando cliente pelo nome @Query Antes de excluir Por Nome");
+            repositorio.encontrarPorNome("%Luis%").forEach(System.out::println);
+            System.out.println("Buscando cliente pelo nome @Query Nativo Antes de excluir Por Nome");
+            repositorio.encontrarPorNomeNativo("%Luis%").forEach(System.out::println);
+
+            repositorio.deletePorNome("Luis Paulo JPA I atualizado");
+
+            System.out.println("Buscando cliente pelo nome @Query Depois de excluir Por Nome");
+            repositorio.encontrarPorNome("%Luis%").forEach(System.out::println);
+
+
             System.out.println("Existe a Cliente Aline antes da exclusão? " + repositorio.existsByNome("Aline JPA I atualizado"));
             System.out.println("Excluindo todos os clientes");
             todos.forEach(c -> repositorio.delete(c));
