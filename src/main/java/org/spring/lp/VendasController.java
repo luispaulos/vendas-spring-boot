@@ -42,7 +42,7 @@ public class VendasController {
             todos = repositorio.findAll();
             todos.forEach(System.out::println);
             System.out.println("Buscando cliente pelo nome");
-            List<Cliente> clientes = repositorio.findByNomeLike("Lu");
+            List<Cliente> clientes = repositorio.findByNomeLike("%JPA I%");
             clientes.forEach(System.out::println);
             System.out.println("Excluindo todos os clientes");
             todos.forEach(c -> repositorio.delete(c));

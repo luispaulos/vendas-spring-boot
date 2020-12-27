@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IClienteJPARepositorio extends JpaRepository<Cliente, Integer> {
 
+    //utiliza a convenção findBy criando um Query Method montando a seguinte consulta:
+    //select c from Cliente c where c.nome like :nome
     List<Cliente> findByNomeLike(String nome);
 }
