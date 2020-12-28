@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping({"/clientes"})
 public class ClienteController {
 
     @Autowired
@@ -19,7 +20,7 @@ public class ClienteController {
     @Autowired
     private IPedidoJPARepositorio pedidoJPARepositorio;
 
-    @GetMapping("/clientes/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity getClienteById(@PathVariable("id") Integer id){
         Optional<Cliente> oCliente = clienteJPARepositorio.findById(id);
@@ -29,20 +30,20 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/clientes/all")
+    @GetMapping("/all")
     @ResponseBody
     public List<Cliente> todosClientes(){
         return clienteJPARepositorio.findAll();
     }
 
-    @PostMapping("/clientes")
+    @PostMapping()
     @ResponseBody
     public ResponseEntity salvar(@RequestBody Cliente cliente){
         Cliente clienteSalvo = clienteJPARepositorio.save(cliente);
         return ResponseEntity.ok(clienteSalvo);
     }
 
-    @DeleteMapping("/clientes/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public ResponseEntity deletar(@PathVariable Integer id){
         Optional<Cliente> opCliente = clienteJPARepositorio.findById(id);
@@ -52,5 +53,16 @@ public class ClienteController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody Cliente cliente){
+        return clienteJPARepositorio.findById(id).map(clienteExistente ->
+        {
+            cliente.setId(clienteExistente.getId());
+            clienteJPARepositorio.save(cliente);
+            return ResponseEntity.noContent().build();
+        }).orElseGet(()-> ResponseEntity.notFound().build());
     }
 }
