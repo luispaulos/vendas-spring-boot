@@ -44,7 +44,7 @@ public class ClienteController {
         clienteJPARepositorio.findById(id).map(c -> {
             pedidoJPARepositorio.deleteByClienteId(id);
             clienteJPARepositorio.delete(c);
-            return c;
+            return Void.TYPE;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
 
     }

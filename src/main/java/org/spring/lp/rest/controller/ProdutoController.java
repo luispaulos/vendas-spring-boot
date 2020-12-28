@@ -38,7 +38,7 @@ public class ProdutoController {
     public void deletar(@PathVariable Integer id){
         produtoJPARepositorio.findById(id).map(p -> {
             produtoJPARepositorio.delete(p);
-            return p;
+            return Void.TYPE;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado."));
     }
 
