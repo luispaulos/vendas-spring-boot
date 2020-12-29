@@ -36,7 +36,7 @@ public class PedidoServiceImpl implements PedidoService {
     public Pedido salvar(PedidoDTO pedidoDTO) {
         Integer idCliente = pedidoDTO.getCliente();
         Cliente cliente = clienteJPARepositorio.findById(idCliente)
-                .orElseThrow(() -> new RegraNegocioException("Código do Cliente inválido: " + idCliente));
+                .orElseThrow(() -> new RuntimeException("Código do Cliente inválido: " + idCliente));
 
         Pedido pedido = new Pedido();
         pedido.setDataPedido(LocalDate.now());
