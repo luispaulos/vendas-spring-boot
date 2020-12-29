@@ -34,7 +34,8 @@ public class VendasController {
     public CommandLineRunner inserirClienteEPedido(@Autowired IClienteJPARepositorio clienteJPARepositorio,
                                                    IPedidoJPARepositorio pedidoJPARepositorio){
         return args -> {
-            Cliente fulano = new Cliente("Fulano");
+            Cliente fulano = new Cliente();
+            fulano.setNome("Fulano");
             clienteJPARepositorio.save(fulano);
 
             Pedido p = new Pedido();
@@ -57,8 +58,8 @@ public class VendasController {
     //@Bean
     public CommandLineRunner inserirClientesIJPA(@Autowired IClienteJPARepositorio repositorio){
         return args -> {
-            repositorio.save(new Cliente("Luis Paulo JPA"));
-            repositorio.save(new Cliente("Aline JPA"));
+            //repositorio.save(new Cliente("Luis Paulo JPA"));
+            //repositorio.save(new Cliente("Aline JPA"));
 
             System.out.println("Listando todos os clientes");
             List<Cliente> todos = repositorio.findAll();
@@ -99,8 +100,8 @@ public class VendasController {
     //@Bean
     public CommandLineRunner inserirClientesJPA(@Autowired ClienteJPARepositorio repositorio){
         return args -> {
-            repositorio.salvar(new Cliente("Luis Paulo JPA"));
-            repositorio.salvar(new Cliente("Aline JPA"));
+            //repositorio.salvar(new Cliente("Luis Paulo JPA"));
+            //repositorio.salvar(new Cliente("Aline JPA"));
 
             System.out.println("Listando todos os clientes");
             List<Cliente> todos = repositorio.obterTodos();
@@ -128,8 +129,8 @@ public class VendasController {
     //@Bean
     public CommandLineRunner inserirClientesJDBC(@Autowired ClienteJDBCRepositorio repositorio){
         return args ->{
-            repositorio.salvar(new Cliente("Luis Paulo"));
-            repositorio.salvar(new Cliente("Aline"));
+            //repositorio.salvar(new Cliente("Luis Paulo"));
+           // repositorio.salvar(new Cliente("Aline"));
 
             System.out.println("Listando todos os clientes");
             List<Cliente> todos = repositorio.obterTodos();
