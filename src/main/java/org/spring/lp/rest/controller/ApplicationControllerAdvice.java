@@ -14,10 +14,4 @@ public class ApplicationControllerAdvice {
     public String handleRegraNegocioException(RegraNegocioException ex){
         return ex.getMessage();
     }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleException(Exception ex){
-        return "Aconteceu um erro inesperado.";
-    }
 }
