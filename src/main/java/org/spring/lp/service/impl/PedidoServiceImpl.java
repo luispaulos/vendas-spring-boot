@@ -1,10 +1,10 @@
 package org.spring.lp.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.lp.domain.entity.Cliente;
-import org.spring.lp.domain.entity.ItemPedido;
-import org.spring.lp.domain.entity.Pedido;
-import org.spring.lp.domain.entity.Produto;
+import org.spring.lp.domain.entity.domain.Cliente;
+import org.spring.lp.domain.entity.domain.ItemPedido;
+import org.spring.lp.domain.entity.domain.Pedido;
+import org.spring.lp.domain.entity.domain.Produto;
 import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
 import org.spring.lp.domain.repositorio.IItemPedidoJPARepositorio;
 import org.spring.lp.domain.repositorio.IPedidoJPARepositorio;

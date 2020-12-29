@@ -1,6 +1,6 @@
 package org.spring.lp.rest.controller;
 
-import org.spring.lp.domain.entity.Pedido;
+import org.spring.lp.domain.entity.domain.Pedido;
 import org.spring.lp.rest.dto.PedidoDTO;
 import org.spring.lp.service.PedidoService;
 import org.springframework.http.HttpStatus;

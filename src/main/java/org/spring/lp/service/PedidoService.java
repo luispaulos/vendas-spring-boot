@@ -1,6 +1,6 @@
 package org.spring.lp.service;
 
-import org.spring.lp.domain.entity.Pedido;
+import org.spring.lp.domain.entity.domain.Pedido;
 import org.spring.lp.rest.dto.PedidoDTO;
 
 public interface PedidoService {

@@ -1,6 +1,6 @@
 package org.spring.lp.domain.repositorio;
 
-import org.spring.lp.domain.entity.Cliente;
+import org.spring.lp.domain.entity.domain.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
