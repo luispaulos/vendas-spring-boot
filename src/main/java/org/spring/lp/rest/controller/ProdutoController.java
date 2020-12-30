@@ -1,6 +1,6 @@
 package org.spring.lp.rest.controller;
 
-import org.spring.lp.domain.entity.domain.Produto;
+import org.spring.lp.domain.entity.Produto;
 import org.spring.lp.domain.repositorio.IProdutoJPARepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

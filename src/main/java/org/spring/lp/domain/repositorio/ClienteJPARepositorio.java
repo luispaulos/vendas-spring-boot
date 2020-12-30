@@ -1,6 +1,6 @@
 package org.spring.lp.domain.repositorio;
 
-import org.spring.lp.domain.entity.domain.Cliente;
+import org.spring.lp.domain.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,8 +2,8 @@ package org.spring.lp.rest.controller;
 
 import org.spring.lp.Animal;
 import org.spring.lp.annotations.Cachorro;
-import org.spring.lp.domain.entity.domain.Cliente;
-import org.spring.lp.domain.entity.domain.Pedido;
+import org.spring.lp.domain.entity.Cliente;
+import org.spring.lp.domain.entity.Pedido;
 import org.spring.lp.domain.repositorio.ClienteJDBCRepositorio;
 import org.spring.lp.domain.repositorio.ClienteJPARepositorio;
 import org.spring.lp.domain.repositorio.IClienteJPARepositorio;

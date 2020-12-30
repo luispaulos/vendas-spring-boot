@@ -1,4 +1,4 @@
-package org.spring.lp.domain.entity.domain;
+package org.spring.lp.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

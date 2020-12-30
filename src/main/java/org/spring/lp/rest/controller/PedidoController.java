@@ -1,7 +1,7 @@
 package org.spring.lp.rest.controller;
 
-import org.spring.lp.domain.entity.domain.ItemPedido;
-import org.spring.lp.domain.entity.domain.Pedido;
+import org.spring.lp.domain.entity.ItemPedido;
+import org.spring.lp.domain.entity.Pedido;
 import org.spring.lp.rest.dto.InformacaoItemPedidoDTO;
 import org.spring.lp.rest.dto.InformacaoPedidoDTO;
 import org.spring.lp.rest.dto.PedidoDTO;
@@ -48,6 +48,7 @@ public class PedidoController {
                 .data(p.getDataPedido().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .nomeCliente(p.getCliente().getNome())
                 .total(p.getTotal())
+                .status(p.getStatus().name())
                 .itens(converterItens(p.getItens())).build();
     }
 

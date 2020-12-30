@@ -1,7 +1,7 @@
 package org.spring.lp.domain.repositorio;
 
-import org.spring.lp.domain.entity.domain.Cliente;
-import org.spring.lp.domain.entity.domain.Pedido;
+import org.spring.lp.domain.entity.Cliente;
+import org.spring.lp.domain.entity.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

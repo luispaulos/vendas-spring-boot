@@ -1,10 +1,11 @@
 package org.spring.lp.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.spring.lp.domain.entity.domain.Cliente;
-import org.spring.lp.domain.entity.domain.ItemPedido;
-import org.spring.lp.domain.entity.domain.Pedido;
-import org.spring.lp.domain.entity.domain.Produto;
+import org.spring.lp.domain.entity.Cliente;
+import org.spring.lp.domain.entity.ItemPedido;
+import org.spring.lp.domain.entity.Pedido;
+import org.spring.lp.domain.entity.Produto;
+import org.spring.lp.domain.enums.StatusPedido;
 import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
 import org.spring.lp.domain.repositorio.IItemPedidoJPARepositorio;
 import org.spring.lp.domain.repositorio.IPedidoJPARepositorio;
@@ -43,6 +44,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
         pedido.setTotal(pedidoDTO.getTotal());
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         List<ItemPedido> itens = converterItens(pedido, pedidoDTO.getItens());
         pedidoJPARepositorio.save(pedido);
