@@ -44,10 +44,10 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setCliente(cliente);
         pedido.setTotal(pedidoDTO.getTotal());
 
-        List<ItemPedido> items = converterItems(pedido, pedidoDTO.getItems());
+        List<ItemPedido> itens = converterItens(pedido, pedidoDTO.getItens());
         pedidoJPARepositorio.save(pedido);
-        itemPedidoJPARepositorio.saveAll(items);
-        pedido.setItens(items);
+        itemPedidoJPARepositorio.saveAll(itens);
+        pedido.setItens(itens);
         return pedido;
     }
 
@@ -56,11 +56,11 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoJPARepositorio.findByIdFetchItens(id);
     }
 
-    private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items){
-        if(items.isEmpty()){
-            throw new RegraNegocioException("Não é possível realizar um pedido sem items.");
+    private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens){
+        if(itens.isEmpty()){
+            throw new RegraNegocioException("Não é possível realizar um pedido sem itens.");
         }
-        return items.stream().map(dto -> {
+        return itens.stream().map(dto -> {
             Integer idProduto = dto.getProduto();
             Produto produto = produtoJPARepositorio.findById(idProduto)
             .orElseThrow(() -> new RegraNegocioException("Código do Produto inválido: " + idProduto));
