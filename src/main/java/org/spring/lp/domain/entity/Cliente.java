@@ -22,10 +22,10 @@ public class Cliente {
     private Integer id;
 
     @Column(name = "nome", length = 100)
-    @NotEmpty(message = "Campo nome é obrigatório.")
+    @NotEmpty(message = "{campo.nome.obrigatorio}")
     private String nome;
 
-    @CPF(message = "CPF inválido")
+    @CPF(message = "{campo.cpf.invalido}")
     @Column(length = 11)
     private String cpf;
 
