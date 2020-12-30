@@ -2,6 +2,8 @@ package org.spring.lp.rest.controller;
 
 import org.spring.lp.domain.entity.ItemPedido;
 import org.spring.lp.domain.entity.Pedido;
+import org.spring.lp.domain.enums.StatusPedido;
+import org.spring.lp.rest.dto.AtualizacaoStatusPedidoDTO;
 import org.spring.lp.rest.dto.InformacaoItemPedidoDTO;
 import org.spring.lp.rest.dto.InformacaoPedidoDTO;
 import org.spring.lp.rest.dto.PedidoDTO;
@@ -39,6 +41,13 @@ public class PedidoController {
         return service.obterPedidoCompleto(id)
                 .map(p -> converter(p))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado."));
+    }
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id, @RequestBody AtualizacaoStatusPedidoDTO dto){
+        String statusNovo = dto.getStatus();
+        service.atualizaStatus(id, StatusPedido.valueOf(statusNovo));
     }
 
     private InformacaoPedidoDTO converter(Pedido p) {

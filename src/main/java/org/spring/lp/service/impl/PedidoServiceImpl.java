@@ -10,6 +10,7 @@ import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
 import org.spring.lp.domain.repositorio.IItemPedidoJPARepositorio;
 import org.spring.lp.domain.repositorio.IPedidoJPARepositorio;
 import org.spring.lp.domain.repositorio.IProdutoJPARepositorio;
+import org.spring.lp.exception.PedidoNaoEncontradoException;
 import org.spring.lp.exception.RegraNegocioException;
 import org.spring.lp.rest.dto.ItemPedidoDTO;
 import org.spring.lp.rest.dto.PedidoDTO;
@@ -56,6 +57,15 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return pedidoJPARepositorio.findByIdFetchItens(id);
+    }
+
+    @Override
+    public void atualizaStatus(Integer id, StatusPedido status) {
+        pedidoJPARepositorio.findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(status);
+                    return pedidoJPARepositorio.save(pedido);
+                }).orElseThrow(() -> new PedidoNaoEncontradoException());
     }
 
     private List<ItemPedido> converterItens(Pedido pedido, List<ItemPedidoDTO> itens){
