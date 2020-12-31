@@ -16,9 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //injetando a classe responsável por retornar um usuário da aplicação
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
+    //cria um Bean que implementa PasswordEncoder responsável pela critografia da senha dos usuários
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
