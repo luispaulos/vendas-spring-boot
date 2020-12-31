@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -45,11 +45,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()//desabilita o mecanismo de proteção csrf de confiança do servidor para web-browsers visto que se trata de uma API Rest
                 .authorizeRequests() //habilita a autorização das requisições
                 .antMatchers("/clientes/**") //para as seguintes URLs
-                //.hasRole("USER") - configura Roles específicas para a URL
+                .hasAnyRole("USER", "ADMIN") // configura Roles específicas para a URL
+                .antMatchers("/produtos/**")
+                .hasRole("ADMIN")
+                .antMatchers("/pedidos/**")
+                .hasAnyRole("USER", "ADMIN")
                 //.hasAuthority("MANTER_USUARIO") - configura Authorities específicas para a URL
-                .permitAll() //permite requisições sem necessidade de autenticação
+                //.permitAll() //permite requisições sem necessidade de autenticação
                 .and() //retorna ao objeto rais (http)
                 .formLogin(); //cria um formulário de login padrão
-                //.formLogin("/meu-login.jsp") -- configura um formulário de login personalizado
+        //.formLogin("/meu-login.jsp") -- configura um formulário de login personalizado
     }
 }
