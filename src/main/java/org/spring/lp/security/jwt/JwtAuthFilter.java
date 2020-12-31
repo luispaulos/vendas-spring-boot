@@ -41,7 +41,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if(!isValid){
                 throw new AuthorizationServiceException("Token inválido.");
             }
-
             String loginUsuario = jwtService.obterLoginUsuario(token);
             //recupera o usuário e suas credenciais a partir do username obtido do token
             UserDetails userDetails = userService.loadUserByUsername(loginUsuario);
@@ -51,12 +50,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             userToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
             //coloca o objeto de autenticação com o usuário e suas informações no contexto de segurança do Sring Security
             SecurityContextHolder.getContext().setAuthentication(userToken);
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-        }
-        else{
-            throw new AuthorizationServiceException("Token não encontrado na requisição.");
-        }
 
-
+        }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

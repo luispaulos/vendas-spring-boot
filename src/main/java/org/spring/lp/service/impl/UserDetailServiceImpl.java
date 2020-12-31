@@ -2,6 +2,7 @@ package org.spring.lp.service.impl;
 
 import org.spring.lp.domain.entity.Usuario;
 import org.spring.lp.domain.repositorio.IUsuarioJPARepositorio;
+import org.spring.lp.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,5 +60,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //        return User.builder().username("lp")
 //                .password(passwordEncoder.encode("123"))//deve passar uma senha criptografada com o Bean que implementa o PasswordEncoder
 //                .roles("USER", "ADMIN").build();
+    }
+
+    public UserDetails autenticar(String username, String password){
+        //carrega o userDetails com os seus dados do banco de dados
+        UserDetails userDetails = loadUserByUsername(username);
+        //valida a senha com o PasswordEncoder injetado para o Bean definido na classe SecurityConfig
+        boolean senhasBatem = passwordEncoder.matches(password, userDetails.getPassword());
+        if(senhasBatem){
+            return userDetails;
+        }
+        throw new SenhaInvalidaException();
     }
 }
