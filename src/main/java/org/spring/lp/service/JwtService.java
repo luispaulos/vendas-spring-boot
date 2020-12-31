@@ -1,5 +1,7 @@
 package org.spring.lp.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.spring.lp.VendasApplication;
@@ -41,11 +43,35 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS512, chaveAssinatura).compact();
     }
 
+    private Claims obterClaims(String token) throws ExpiredJwtException {
+        //converte a String do token em Claims com as informações contidas no token
+        return Jwts.parser().setSigningKey("abs").parseClaimsJws(token).getBody();
+    }
+
+    private String obterLoginUsuario(String token){
+        Claims claims = obterClaims(token);
+        return claims.getSubject();
+    }
+
+    public boolean validarToken(String token){
+        try{
+            Claims claims = obterClaims(token);
+            Date dataExpiracao = claims.getExpiration();
+            LocalDateTime localDateTime = dataExpiracao.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            return !LocalDateTime.now().isAfter(localDateTime);
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(VendasApplication.class);
         JwtService bean = context.getBean(JwtService.class);
         Usuario usuario = Usuario.builder().login("lp").build();
         String token = bean.gerarToken(usuario);
         System.out.println(token);
+
+        System.out.println("Token é válido? " + bean.validarToken(token));
+        System.out.println("Usuários: " + bean.obterLoginUsuario(token));
     }
 }
