@@ -3,6 +3,7 @@ package org.spring.lp.config;
 import org.spring.lp.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -59,6 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("ADMIN")
                 .antMatchers("/pedidos/**")
                 .hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/usuarios/**")
+                .permitAll()
+                .anyRequest().authenticated()
                 //.hasAuthority("MANTER_USUARIO") - configura Authorities específicas para a URL
                 //.permitAll() //permite requisições sem necessidade de autenticação
                 .and() //retorna ao objeto rais (http)
