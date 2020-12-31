@@ -1,4 +1,4 @@
-package org.spring.lp.service;
+package org.spring.lp.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -48,7 +48,7 @@ public class JwtService {
         return Jwts.parser().setSigningKey("abs").parseClaimsJws(token).getBody();
     }
 
-    private String obterLoginUsuario(String token){
+    public String obterLoginUsuario(String token){
         Claims claims = obterClaims(token);
         return claims.getSubject();
     }
