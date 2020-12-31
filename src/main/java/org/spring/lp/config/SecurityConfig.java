@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.hasAuthority("MANTER_USUARIO") - configura Authorities específicas para a URL
                 //.permitAll() //permite requisições sem necessidade de autenticação
                 .and() //retorna ao objeto rais (http)
-                .formLogin(); //cria um formulário de login padrão
+                //.formLogin(); //cria um formulário de login padrão
+                .httpBasic(); //cria a autenticação Basic Authentication enviando as credenciais pelo header da requisição
         //.formLogin("/meu-login.jsp") -- configura um formulário de login personalizado
     }
 }
