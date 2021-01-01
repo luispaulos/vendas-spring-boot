@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtService jwtService;
 
     @Bean
-    public OncePerRequestFilter jwtFilter(){
+    public OncePerRequestFilter jwtFilter() {
         return new JwtAuthFilter(jwtService, userDetailService);
     }
 
@@ -78,12 +79,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 //.hasAuthority("MANTER_USUARIO") - configura Authorities específicas para a URL
                 //.permitAll() //permite requisições sem necessidade de autenticação
-          .and() //retorna ao objeto rais (http)
+                .and() //retorna ao objeto rais (http)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //define que a aplicação não manterá usuário logado, ou seja, uma sessão statfull. A sessão do usuário será Stateless a cada requisição, ou seja, não manterá estado.
                 //.formLogin(); //cria um formulário de login padrão
                 //.httpBasic(); //cria a autenticação Basic Authentication enviando as credenciais pelo header da requisição
-          .and()
+                .and()
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class); //configura para que o JwtAuthFilter seja executado antes do filtro padrão do Spring chamado UsernamePasswordAuthenticationFilter
         //.formLogin("/meu-login.jsp") -- configura um formulário de login personalizado
+    }
+
+    /**
+     * Método onde pode ser configurado url's para serem ignoradas pelo filtro de Segurança do Spring
+     *
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
+                "/configuration/security", "/swagger-ui.html", "/webjars/**");
     }
 }
