@@ -3,7 +3,7 @@ package org.spring.lp.rest.controller;
 import org.spring.lp.exception.PedidoNaoEncontradoException;
 import org.spring.lp.exception.RegraNegocioException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -36,9 +36,9 @@ public class ApplicationControllerAdvice {
                 .collect(Collectors.toList());
     }
 
-    @ExceptionHandler(AuthenticationException.class)
+    @ExceptionHandler(AuthorizationServiceException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handle(AuthenticationException ex){
+    public String handleAuthorizationServiceException(AuthorizationServiceException ex){
         return ex.getMessage();
     }
 }
