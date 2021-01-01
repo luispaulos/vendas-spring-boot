@@ -50,6 +50,7 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
+        <!-- Banco de dados em memória H2 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -60,12 +61,14 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!-- projeto Lombok para facilitar a criação de código comum como getts, setts, construtor etc -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
 
+        <!-- Segurança com Json Web Token (JWT) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
