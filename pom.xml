@@ -7,12 +7,35 @@
     <groupId>org.spring.lp</groupId>
     <artifactId>vendas</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>${empacotamento}</packaging>
 
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
     </properties>
+
+    <profiles>
+        <!-- Profice para ambient de Desenvolvimento -->
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>desenv</id>
+            <properties>
+                <empacotamento>jar</empacotamento>
+                <tomcat.escopo>compile</tomcat.escopo>
+            </properties>
+        </profile>
+
+        <!-- Profice para ambient de Produção -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <empacotamento>war</empacotamento>
+                <tomcat.escopo>provided</tomcat.escopo>
+            </properties>
+        </profile>
+    </profiles>
 
     <!-- provê configuração default para um projeto spring boot e sua árvore de dependencias -->
     <!-- todas as dependencias do mesmo groupId herdarão deste parent -->
@@ -38,7 +61,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <scope>${tomcat.escopo}</scope>
         </dependency>
 
         <dependency>
