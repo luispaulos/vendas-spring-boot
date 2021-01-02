@@ -1,5 +1,6 @@
 package org.spring.lp.rest.controller;
 
+import io.swagger.annotations.*;
 import org.spring.lp.domain.entity.Cliente;
 import org.spring.lp.domain.repositorio.IClienteJPARepositorio;
 import org.spring.lp.domain.repositorio.IPedidoJPARepositorio;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping({"/clientes"})
+@Api("API do Cliente")
 public class ClienteController {
 
     @Autowired
@@ -24,7 +26,12 @@ public class ClienteController {
     private IPedidoJPARepositorio pedidoJPARepositorio;
 
     @GetMapping("/{id}")
-    public Cliente getClienteById(@PathVariable("id") Integer id){
+    @ApiOperation("Obtém o Cliente pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado com o ID informado")
+    })
+    public Cliente getClienteById(@PathVariable("id") @ApiParam("ID do Cliente") Integer id){
         return clienteJPARepositorio.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
@@ -35,7 +42,12 @@ public class ClienteController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar(@RequestBody @Valid Cliente cliente){
+    @ApiOperation("Salva um novo Cliente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cliente salvo"),
+            @ApiResponse(code = 400, message = "Erro de validação nos dados do Cliente")
+    })
+    public Cliente salvar(@RequestBody @Valid @ApiParam("Cliente com nome e cpf") Cliente cliente){
         return clienteJPARepositorio.save(cliente);
     }
 
